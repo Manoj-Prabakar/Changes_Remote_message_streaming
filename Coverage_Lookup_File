@@ -1,0 +1,110 @@
+FLOWCHART_INSTRUCTION_PROMPT = r"""
+Follow the control logic exactly as defined below — no skipping, reordering, or assumption of missing data.  
+Maintain all context variables throughout execution.
+
+1. Check if `consumerApp` is "BHMemberRootBot" or "BHProviderRootBot".
+   - If YES:
+       - If `member.cirrusMemberId` is populated:
+           coverageTypePriority = ["B", "M"]
+           timeLinePriority = "CURRENT"
+           CheckCirrusBH = true
+       - Else:
+           CheckCirrusBH = false
+
+2. If `CheckCirrusBH == true`:
+   - Filter `membership` object(s) where:
+        caller.MID == membership.alternateId OR membership.subscriberId
+   - If only one membership found → assign it.
+   - If multiple → filter to `dataSource == "CR"`.
+   - If no Cirrus membership found → search BH policies.
+   - Set:
+       resolveCoverageIndicator = "S"
+       member.individuals[0].memberships[] = filtered membership object.
+
+3. Perform the first UHC MW Service membershipSearch.
+   - POST https://gateway.optum.com/api/cel/uhc-ivr-mw-auth/v1/member-memberships/search
+   - Inputs:
+       sessionId = <sessionId>
+       consumerApp = <appName>
+       coverageVersion = <Config.MembershipSearch_Coverage_Version>
+       coverageTypePriority = <Config.IDAuth_Coverage_Type_Priority>
+       dateOfService = <mw_idauth_DOS>
+       timeLinePriority = <policy_DateRange>
+   - Outputs: membershipSearch response object
+   - Set in context:
+       member.individuals[0].memberships[] = response.coverage
+       resolveCoverageIndicator = response.resolveCoverageIndicator
+       mwFailure = false
+       MW_Retry_Toggle = "OFF"
+   - On ERROR or EXCEPTION → Return To Root.
+
+4. Check retry condition.
+   If MW_Retry_Toggle = 'ON' and mwFailure = false:
+       Proceed to IsSupMediPlan.
+   Else:
+       Return To Root.
+
+5. Determine IsSupMediPlan.
+   - Toggle: IsSupMediPlan_Toggle
+   - If toggle = ON:
+       askSupMed: "Are you calling about this member's AARP supplement plan?"
+       askSupMedRx: "Which plan are you inquiring about: AARP Supplement, Prescription Drug, or Something Else?"
+   - Responses:
+       • "AARP Supplement" → medSup = Y, notvalidpolicyresolved = yes, onlyAARP = true, onlyRX = false
+       • "Prescription Drug" → medSup = Y, notvalidpolicyresolved = yes, onlyAARP = false, onlyRX = true
+       • "Something Else" or No Recognition → medSup = N
+
+6. Perform UHC MW Service membershipSearch again with updated parameters.
+   - POST https://gateway.optum.com/api/cel/uhc-ivr-mw-auth/v1/member-memberships/search
+   - Inputs:
+       sessionId = <sessionId>
+       consumerApp = <appName>
+       coverageVersion = <Config.MembershipSearch_Coverage_Version>
+       coverageTypePriority = <Config.IDAuth_Coverage_Type_Priority>
+       timeLinePriority = <policy_DateRange>
+       medSup = <medSup>
+       onlyAARP = <onlyAARP>
+       onlyRx = <onlyRX>
+   - Outputs: membershipSearch response object
+   - Set in context:
+       member.individuals[0].memberships[] = response.coverage
+       PolicySelectedFlag = "Y"
+       mwFailure = false
+       MW_Retry_Toggle = "OFF"
+   - On ERROR or EXCEPTION → Return To Root.
+
+7. Check if the coverage object has an Active MR Plan.
+   - If yes, set configuration.AARPSteeringBot_MRPartD_Toggle = ON
+   - If no, set configuration.AARPSteeringBot_MRPartD_Toggle = OFF (default)
+
+8. Evaluate AARP plan effective stop date.
+   - If Insurance effectiveStopDate > (current day - 60 days):
+       Set the first element of the coverage object with coverageTypeTimelineIndicator = "current" (AARP plan)
+   - Else (no valid AARP plan within 60 days):
+       Set the first element of the coverage object with coverageTypeTimelineIndicator = "past" (AARP plan)
+
+9. Handle multiple MR policies.
+   - If there are multiple MR plans with coverageTypeTimelineIndicator = "current":
+       hasMultipleMRPolicy = true
+       Set the first element of coverage object as the most recent MR policy.
+
+10. Return to Root.
+    - Final output context:
+        {
+          "medSup": <Y/N>,
+          "onlyAARP": <true/false>,
+          "onlyRX": <true/false>,
+          "PolicySelectedFlag": <Y/N>,
+          "resolveCoverageIndicator": <value>,
+          "hasMultipleMRPolicy": <true/false>,
+          "coverageObject": <filtered coverage data>
+        }
+
+Execution Rules:
+- Follow steps strictly in order (1 to 10).
+- Do not skip or invent steps.
+- If a required input is missing, halt and ask for that field only.
+- Treat API calls as atomic: call → process → set context → move on.
+- At each step, log: {step_id, action, inputs, outputs, context_updates}.
+- Always finish with the "Return to Root" context summary.
+"""
