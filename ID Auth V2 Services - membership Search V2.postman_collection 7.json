@@ -1,0 +1,949 @@
+{
+	"info": {
+		"_postman_id": "2d322880-08c0-458d-930b-f61b77ddd1bc",
+		"name": "ID Auth V2 Services - membership Search V2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "MW services Non-PROD",
+			"item": [
+				{
+					"name": "NON PROD Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"\r",
+									"pm.globals.set('token', data.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"client_id\": \"VrAHaeoi4irZfzZcRJZyM7xtdLAqU3gi\",\r\n \"client_secret\": \"VkQJZC0UOimmXoUQDs5jApSf45VSsPB5\",\r\n \"grant_type\": \"client_credentials\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/auth/oauth2/cached/token",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"auth",
+								"oauth2",
+								"cached",
+								"token"
+							]
+						},
+						"description": "note the endpoint takes both URL params and a body param. They're interchangeable."
+					},
+					"response": []
+				},
+				{
+					"name": "1-QA- Member-individuals/read",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sessionId\": \"00006\",\n  \"consumerApp\": \"None\",\n  \"memIdentifier\": \"0071077981\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/cel/ivr-mw-auth/hcp/v1/member-individuals/read",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"cel",
+								"ivr-mw-auth",
+								"hcp",
+								"v1",
+								"member-individuals",
+								"read"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1-QA- Member-phones/read",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"logLevel\": \"INFO\",\n\t\"additionalRequestParams\": {\n\t\t\"businessUnit\": \"Bh\"\n\t},\n\t\"sessionId\": \"test2\",\n\t\"ani\": \"4356192827\",\n\t\"consumerApp\": \"UHC Member\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v1/member-phones/read",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"qa",
+								"cel",
+								"ivr-mw-auth",
+								"hcp",
+								"v1",
+								"member-phones",
+								"read"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK Sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"logLevel\": \"INFO\",\n\t\"additionalRequestParams\": {\n\t\t\"businessUnit\": \"Bh\"\n\t},\n\t\"sessionId\": \"test2\",\n\t\"ani\": \"4356192827\",\n\t\"consumerApp\": \"UHC Member\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v1/member-phones/read",
+									"protocol": "https",
+									"host": [
+										"gateway-stage",
+										"optum",
+										"com"
+									],
+									"path": [
+										"api",
+										"qa",
+										"cel",
+										"ivr-mw-auth",
+										"hcp",
+										"v1",
+										"member-phones",
+										"read"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "280"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Second",
+									"value": "994"
+								},
+								{
+									"key": "X-RateLimit-Limit-Second",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "994"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=16070400; includeSubDomains; preload"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "script-src 'self' 'sha256-zxz7vxLGbWQv4K2CCjqCoHgvuhkxQ5leeNJRAsm2fqE='"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 11 Nov 2024 10:32:06 GMT"
+								},
+								{
+									"key": "optum-cid-ext",
+									"value": "d1513aeb-a97b-41fa-95a2-68cf28de2c79#483464"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-Upstream-Latency",
+									"value": "231"
+								},
+								{
+									"key": "X-Proxy-Latency",
+									"value": "4"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"returnCode\": \"200\",\n    \"statusMessage\": \"Success\",\n    \"transactionId\": \"71191f2a-598a-494b-93ca-98881fcc03c6\",\n    \"sessionId\": \"test2\",\n    \"memberSingleEntity\": \"S\",\n    \"dobList\": [\n        \"19491231\"\n    ],\n    \"last4SSNList\": [\n        \"\"\n    ],\n    \"firstNameList\": [\n        \"Gailen\"\n    ],\n    \"zipCodeList\": [\n        \"84790\"\n    ],\n    \"aniExists\": true,\n    \"offerAniUpdate\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "2-QA- Member-individuals/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"consumerApp\": \"UHC Member\",\n  \"dob\": \"19961128\",\n  \"memIdentifier\": \"65253205300\",\n  \"sessionId\": \"123456\",\n  \"zipCode\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/cel/ivr-mw-auth/hcp/v1/member-individuals/search",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"cel",
+								"ivr-mw-auth",
+								"hcp",
+								"v1",
+								"member-individuals",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK Sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"logLevel\": \"INFO\",\n  \"additionalRequestParams\": {\n    \"businessUnit\": \"bh\"\n  },\n  \"sessionId\": \"kristine_testing_dmz_012323423423\",\n  \"consumerApp\": \"Vision\",\n  \"memIdentifier\": \"997984257\",\n  \"firstName\": \"\",\n  \"dob\": \"19910804\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v1/member-individuals/search",
+									"protocol": "https",
+									"host": [
+										"gateway-stage",
+										"optum",
+										"com"
+									],
+									"path": [
+										"api",
+										"qa",
+										"cel",
+										"ivr-mw-auth",
+										"hcp",
+										"v1",
+										"member-individuals",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2557"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Second",
+									"value": "997"
+								},
+								{
+									"key": "X-RateLimit-Limit-Second",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "997"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=16070400; includeSubDomains; preload"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "script-src 'self' 'sha256-zxz7vxLGbWQv4K2CCjqCoHgvuhkxQ5leeNJRAsm2fqE='"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 12 Feb 2025 12:11:59 GMT"
+								},
+								{
+									"key": "optum-cid-ext",
+									"value": "0241ae23-725c-4d74-9603-79eb6b144169#1014921"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-Upstream-Latency",
+									"value": "217"
+								},
+								{
+									"key": "X-Proxy-Latency",
+									"value": "5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"returnCode\": \"200\",\n    \"statusMessage\": \"Success\",\n    \"transactionId\": \"947d32c9-f1bc-49d0-9508-e275ece1daba\",\n    \"sessionId\": \"kristine_testing_dmz_012323423423\",\n    \"memberSingleEntity\": \"S\",\n    \"members\": [\n        {\n            \"ssn\": \"488063503\",\n            \"individualIdentifier\": \"5110345429\",\n            \"gender\": \"F\",\n            \"dob\": \"19910804\",\n            \"name\": {\n                \"firstName\": \"Trinity\",\n                \"lastName\": \"Edwards\"\n            },\n            \"address\": [\n                {\n                    \"typeCode\": \"Mailing\",\n                    \"addressLine1\": \"5676 E State Highway Af\",\n                    \"city\": \"Fair Grove\",\n                    \"postalCode\": \"65648-8665\",\n                    \"first5PostalCode\": \"65648\",\n                    \"stateCode\": \"MO\",\n                    \"countryCode\": \"US\"\n                },\n                {\n                    \"typeCode\": \"Primary Residence\",\n                    \"addressLine1\": \"5676 E State Highway Af\",\n                    \"city\": \"Fair Grove\",\n                    \"postalCode\": \"65648-8665\",\n                    \"first5PostalCode\": \"65648\",\n                    \"stateCode\": \"MO\",\n                    \"countryCode\": \"US\"\n                }\n            ],\n            \"phone\": [\n                {\n                    \"type\": \"Additional Telephone\",\n                    \"number\": \"5735288906\",\n                    \"primaryIndicator\": false\n                },\n                {\n                    \"type\": \"Business Telephone\",\n                    \"number\": \"5735288906\",\n                    \"primaryIndicator\": false\n                },\n                {\n                    \"type\": \"Home Telephone\",\n                    \"number\": \"5735288906\",\n                    \"primaryIndicator\": false\n                },\n                {\n                    \"type\": \"Mobile Telephone\",\n                    \"number\": \"8552000788\",\n                    \"primaryIndicator\": false\n                }\n            ],\n            \"identifiers\": [\n                {\n                    \"id\": \"312358030\",\n                    \"typeCode\": \"cpins\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                },\n                {\n                    \"id\": \"35377224\",\n                    \"typeCode\": \"cdbXrefIds\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                },\n                {\n                    \"id\": \"09051940049106775201001\",\n                    \"typeCode\": \"cdbCSIds\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                }\n            ],\n            \"otherIdentifiers\": [\n                {\n                    \"id\": \"C22437024\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"UMR\"\n                },\n                {\n                    \"id\": \"00491067752\",\n                    \"typeCode\": \"SubscriberId\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                },\n                {\n                    \"id\": \"997984257\",\n                    \"typeCode\": \"CESAlternateMemberId\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                },\n                {\n                    \"id\": \"99798425701\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"VAS\"\n                },\n                {\n                    \"id\": \"997984257\",\n                    \"typeCode\": \"SubscriberId\",\n                    \"sourceSysCode\": \"VAS\"\n                },\n                {\n                    \"id\": \"33905090\",\n                    \"typeCode\": \"SubscriberId\",\n                    \"sourceSysCode\": \"UMR\"\n                },\n                {\n                    \"id\": \"488063503\",\n                    \"typeCode\": \"SocialSecurityNumber\",\n                    \"sourceSysCode\": \"CDB_CS\"\n                }\n            ],\n            \"x-uhg-user-identifier\": \"eyJlaWQiOiI1MTEwMzQ1NDI5IiwiZmlkcyI6W3siaWQiOiIyMDkwNTM5OSIsInNvdXJjZUNEIjoiQ0RCX0NTIn1dLCJjcmlkcyI6W10sImNtcHNNYnJOdW0iOltdLCJjbXBzSWRzIjpbXSwiZ3BzSWRzIjpbXSwiZ3BzSW5kdklkcyI6W10sImRlbnRhbElkcyI6W10sImRlbnRhbElkc05ldyI6W10sImRlbnRhbENvbnRyS2V5cyI6W10sInVoT25lU2JzY3JJZCI6W10sImNyTWVtYmVyU1JLIjpbXSwiY3JTYnNjcklkIjpbXSwicGhtZHNJZHMiOltdLCJwcGxIbHRoTWJySWRzIjpbXSwicm1ocE1icklkcyI6W10sInVoT25lTWJySWRzIjpbXSwiY3NwTWJySWRzIjpbXSwiY3NwU2JzY3JJZCI6W10sInNyY1N5c0lkcyI6W3siaWRzIjpbIjA5MDUxOTQwMDQ5MTA2Nzc1MjAxMDAxIl0sInNvdXJjZUNEIjoiQ0RCX0NTIn1dLCJzaWVycmFNYnJJZHMiOltdLCJ2YXNNYnJJZHMiOlsiOTk3OTg0MjU3MDEiXSwidmFzU2JzY3JJZCI6WyI5OTc5ODQyNTciXSwicGhtZHNTYnNjcklkcyI6W10sImNyU2JzY3JJZEdycCI6W10sIm5pY2VTYnNjcklkR3JwIjpbXSwiY2VzU2JzY3JJZEdycCI6WyIwMDQ5MTA2Nzc1Ml8wOTA1MTk0Il0sImhoc0lkIjpudWxsfQ==\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "2-QA- Member-phones/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"logLevel\": \"INFO\",\n  \"additionalRequestParams\": {\n    \"businessUnit\": \"bh\"\n  },\n  \"sessionId\": \"test123456789_antonio\",\n  \"consumerApp\": \"UHC Member\",\n  \"ani\": \"4356192827\",\n  \"firstName\": \"Gailen\",\n  \"dob\": \"19491231\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v1/member-phones/search",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"qa",
+								"cel",
+								"ivr-mw-auth",
+								"hcp",
+								"v1",
+								"member-phones",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK Sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"logLevel\": \"INFO\",\n  \"sessionId\": \"testing_123321\",\n  \"consumerApp\": \"UHCMemberBot\",\n  \"ani\": \"1873300900\",\n  \"firstName\": \"\",\n  \"dob\": \"19391122\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v1/member-phones/search",
+									"protocol": "https",
+									"host": [
+										"gateway-stage",
+										"optum",
+										"com"
+									],
+									"path": [
+										"api",
+										"qa",
+										"cel",
+										"ivr-mw-auth",
+										"hcp",
+										"v1",
+										"member-phones",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3036"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Second",
+									"value": "995"
+								},
+								{
+									"key": "X-RateLimit-Limit-Second",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "995"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "1"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=16070400; includeSubDomains; preload"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "script-src 'self' 'sha256-zxz7vxLGbWQv4K2CCjqCoHgvuhkxQ5leeNJRAsm2fqE='"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Mar 2025 13:41:50 GMT"
+								},
+								{
+									"key": "optum-cid-ext",
+									"value": "b719cbf7-6ea9-4a08-9eed-d579ac7e123c#1003479"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-Upstream-Latency",
+									"value": "341"
+								},
+								{
+									"key": "X-Proxy-Latency",
+									"value": "4"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"returnCode\": \"200\",\n    \"statusMessage\": \"Success\",\n    \"transactionId\": \"9acf97c0-d551-4ae3-aefb-578f54e635e5\",\n    \"sessionId\": \"testing_123321\",\n    \"memberSingleEntity\": \"S\",\n    \"members\": [\n        {\n            \"ssn\": \"529922428\",\n            \"individualIdentifier\": \"5060438605\",\n            \"medicareBeneficiaryId\": \"6XC7YU3GU55\",\n            \"gpsHouseholdId\": \"640026211864\",\n            \"gpsIndividualId\": \"9000037532690\",\n            \"gender\": \"M\",\n            \"dob\": \"19391122\",\n            \"name\": {\n                \"firstName\": \"Jimmye\",\n                \"lastName\": \"Gunnels\"\n            },\n            \"address\": [\n                {\n                    \"typeCode\": \"Unknown Residence\",\n                    \"addressLine1\": \"9030 W Sahara Ave Pmb 515\",\n                    \"city\": \"Las Vegas\",\n                    \"postalCode\": \"89117-5744\",\n                    \"first5PostalCode\": \"89117\",\n                    \"stateCode\": \"NV\",\n                    \"countryCode\": \"US\"\n                },\n                {\n                    \"typeCode\": \"Primary Residence\",\n                    \"addressLine1\": \"9150 Bird Spring Lane\",\n                    \"city\": \"Henderson\",\n                    \"postalCode\": \"89002\",\n                    \"first5PostalCode\": \"89002\",\n                    \"stateCode\": \"NV\",\n                    \"countryCode\": \"US\"\n                }\n            ],\n            \"electronicAddress\": [\n                {\n                    \"type\": \"Primary Email\",\n                    \"email\": \"EEOMKROS70@MASKED.COM\"\n                }\n            ],\n            \"phone\": [\n                {\n                    \"type\": \"Unknown Telephone\",\n                    \"number\": \"1873300900\",\n                    \"primaryIndicator\": false\n                },\n                {\n                    \"type\": \"Additional Telephone\",\n                    \"number\": \"7029285726\",\n                    \"primaryIndicator\": false\n                },\n                {\n                    \"type\": \"Home Telephone\",\n                    \"number\": \"7029285726\",\n                    \"primaryIndicator\": false\n                }\n            ],\n            \"identifiers\": [\n                {\n                    \"id\": \"309566986\",\n                    \"typeCode\": \"cpins\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                },\n                {\n                    \"id\": \"33156127\",\n                    \"typeCode\": \"cdbXrefIds\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                },\n                {\n                    \"id\": \"9000037532690\",\n                    \"typeCode\": \"gpsIndividualIds\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"640026211864\",\n                    \"typeCode\": \"gpsHouseholdIds\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"NI-26-9035297-01\",\n                    \"typeCode\": \"cdbPAIds\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                }\n            ],\n            \"otherIdentifiers\": [\n                {\n                    \"id\": \"878990080\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"RXCL1\"\n                },\n                {\n                    \"id\": \"6XC7YU3GU55\",\n                    \"typeCode\": \"MedicareBeneficiaryIdentifier\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"983746075\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"878990080\",\n                    \"typeCode\": \"RxClaimsMemberId\",\n                    \"sourceSysCode\": \"RXCL1\"\n                },\n                {\n                    \"id\": \"9035297\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"903529701\",\n                    \"typeCode\": \"NiceMemberId\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                },\n                {\n                    \"id\": \"9035297\",\n                    \"typeCode\": \"SubscriberId\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                },\n                {\n                    \"id\": \"16251666\",\n                    \"typeCode\": \"MemberId\",\n                    \"sourceSysCode\": \"GPS\"\n                },\n                {\n                    \"id\": \"529922428\",\n                    \"typeCode\": \"SocialSecurityNumber\",\n                    \"sourceSysCode\": \"CDB_PA\"\n                }\n            ],\n            \"gpsHouseholdIds\": [\n                \"640026211864\",\n                \"160037816716\"\n            ],\n            \"optumcare_identifiers\": [\n                {}\n            ],\n            \"x-uhg-user-identifier\": \"eyJlaWQiOiI1MDYwNDM4NjA1IiwiZmlkcyI6W3siaWQiOiIxOTIxMzg0MyIsInNvdXJjZUNEIjoiQ0RCX1BBIn1dLCJjcmlkcyI6W10sImNtcHNNYnJOdW0iOltdLCJjbXBzSWRzIjpbXSwiZ3BzSWRzIjpbIjY0MDAyNjIxMTg2NCIsIjE2MDAzNzgxNjcxNiJdLCJncHNJbmR2SWRzIjpbIjkwMDAwMzc1MzI2OTAiLCI2MjAwMDI2MTkyMzYyIl0sImRlbnRhbElkcyI6W10sImRlbnRhbElkc05ldyI6W10sImRlbnRhbENvbnRyS2V5cyI6W10sInVoT25lU2JzY3JJZCI6W10sImNyTWVtYmVyU1JLIjpbXSwiY3JTYnNjcklkIjpbXSwicGhtZHNJZHMiOltdLCJwcGxIbHRoTWJySWRzIjpbXSwicm1ocE1icklkcyI6W10sInVoT25lTWJySWRzIjpbXSwiY3NwTWJySWRzIjpbXSwiY3NwU2JzY3JJZCI6W10sInNyY1N5c0lkcyI6W3siaWRzIjpbIk5JLTI2LTkwMzUyOTctMDEiXSwic291cmNlQ0QiOiJDREJfUEEifV0sInNpZXJyYU1icklkcyI6W10sInZhc01icklkcyI6W10sInZhc1Nic2NySWQiOltdLCJwaG1kc1Nic2NySWRzIjpbXSwiY3JTYnNjcklkR3JwIjpbXSwibmljZVNic2NySWRHcnAiOlsiOTAzNTI5N185MDAxNDIiXSwiY2VzU2JzY3JJZEdycCI6W10sImhoc0lkIjpudWxsfQ==\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "3-QA- Member-membership/search V2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sessionId\": \"123456\",\n    \"consumerApp\": \"uhcProviderSteering\",\n    \"coverageVersion\": \"2\", \n    \"coverageTypePriority\": \"M,MA,MC,ME,MH,MS,B,RX\",\n    \"timeLinePriority\": \"CURRENT, PAST, FUTURE\",\n    \"medSup\": \"N\",\n    \"onlyAARP\": \"\",\n    \"onlyRX\": \"\",\n    \"groupNumber\": \"1208502\",\n    \"dateOfService\": \"\",\n    \"policyCategory\": \"COMM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/cel/ivr-mw-auth/hcp/v1/member-memberships/search",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"cel",
+								"ivr-mw-auth",
+								"hcp",
+								"v1",
+								"member-memberships",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 OK Sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"logLevel\": \"INFO\",\n  \"sessionId\": \"testing_123321\",\n  \"consumerApp\": \"UHCMemberRootBot\",\n  \"coverageVersion\": \"2\",\n  \"coverageTypePriority\": \"M,MA,MC,ME,MH,MS,B,RX\",\n  \"timeLinePriority\": \"CURRENT,PAST,FUTURE\",\n  \"dateOfService\": \"\",\n  \"groupNumber\": \"\",\n  \"medSup\": \"\",\n  \"onlyAARP\": \"\",\n  \"onlyRx\": \"\",\n  \"policyCategory\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://gateway-stage.optum.com/api/qa/cel/ivr-mw-auth/hcp/v2/member-memberships/search",
+									"protocol": "https",
+									"host": [
+										"gateway-stage",
+										"optum",
+										"com"
+									],
+									"path": [
+										"api",
+										"qa",
+										"cel",
+										"ivr-mw-auth",
+										"hcp",
+										"v2",
+										"member-memberships",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1275"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "RateLimit-Reset",
+									"value": "1"
+								},
+								{
+									"key": "RateLimit-Remaining",
+									"value": "999"
+								},
+								{
+									"key": "X-RateLimit-Remaining-Second",
+									"value": "999"
+								},
+								{
+									"key": "X-RateLimit-Limit-Second",
+									"value": "1000"
+								},
+								{
+									"key": "RateLimit-Limit",
+									"value": "1000"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=16070400; includeSubDomains; preload"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Security-Policy",
+									"value": "script-src 'self' 'sha256-zxz7vxLGbWQv4K2CCjqCoHgvuhkxQ5leeNJRAsm2fqE='"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 27 Mar 2025 13:39:26 GMT"
+								},
+								{
+									"key": "optum-cid-ext",
+									"value": "1778575a-9b09-471d-904e-49b64ad022c1#942484"
+								},
+								{
+									"key": "vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "X-Upstream-Latency",
+									"value": "280"
+								},
+								{
+									"key": "X-Proxy-Latency",
+									"value": "4"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"returnCode\": \"200\",\n    \"statusMessage\": \"Success\",\n    \"transactionId\": \"cf303644-71c8-4ab6-92d5-28abc881dfda\",\n    \"sessionId\": \"testing_123321\",\n    \"resolveCoverageIndicator\": \"S\",\n    \"isAARP\": false,\n    \"isAARPwithRx\": false,\n    \"coverage\": [\n        {\n            \"subscriberId\": \"00001228391\",\n            \"alternateId\": \"994505349\",\n            \"xrefId\": \"39128511\",\n            \"relationshipCode\": \"000\",\n            \"subscriberEnrolleeSourceId\": \"09314550000122839100001\",\n            \"obligorId\": \"01\",\n            \"privacyIndicator\": \"false\",\n            \"referencePartitionNumber\": \"111\",\n            \"policyNumber\": \"0931455\",\n            \"eligibilitySystemTypeCode\": \"01\",\n            \"sourceSysCode\": \"CS\",\n            \"coverageTypeTimelineIndicator\": \"Current\",\n            \"coverageType\": \"M\",\n            \"coverageTypeDescription\": \"MEDICAL\",\n            \"coverageLevelCode\": \"EMP\",\n            \"cdbCoverageLevelCode\": \"1\",\n            \"dependentSequenceNumber\": \"001\",\n            \"topsRelationshipCode\": \"18\",\n            \"relationshipTypeDescription\": \"Self\",\n            \"memberSequenceNumber\": \"00\",\n            \"insuranceEffectiveStartDate\": \"20240101\",\n            \"insuranceEffectiveStopDate\": \"99991231\",\n            \"individualRelationshipCode\": \"EE\",\n            \"memberStateCode\": \"AR\",\n            \"policyCategory\": \"COMM\",\n            \"lineOfBusiness\": \"EI\",\n            \"planType\": \"POS\",\n            \"claimSystemTypeCode\": \"01\",\n            \"reportingCode\": \"0637\",\n            \"productIndicator\": \"Q\",\n            \"customerNumber\": \"0931455\",\n            \"sharedArrangement\": \"00\",\n            \"planVariationCode\": \"0637\",\n            \"carrierInfoList\": [\n                {\n                    \"carrierCode\": \"EU3\",\n                    \"carrierName\": \"0012472\"\n                }\n            ],\n            \"populationId\": \"POP47838\",\n            \"groupName\": \"TYSON FOODS, INC.\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "QA - Provider/search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tin\": \"363261413\",\n  \"npi\": null,\n  \"sessionId\": \"testing_12345678\",\n  \"consumerApp\": \"sdeCoreEngineeringSteeringSandbox\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/pdr/ivr-mw-provider-auth/v1/provider/search",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"pdr",
+								"ivr-mw-provider-auth",
+								"v1",
+								"provider",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QA - Provider/networkstatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"logLevel\": \"INFO\",\n  \"tin\": \"363261413\",\n  \"npi\": \"1801139142\",\n  \"sessionId\": \"testing_1234567\",\n  \"consumerApp\": \"ProvAuthSkill\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/pdr/ivr-mw-provider-auth/v1/provider/networkstatus",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"pdr",
+								"ivr-mw-provider-auth",
+								"v1",
+								"provider",
+								"networkstatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "QA - Provider/Shield search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"consumerApp\": \"sdeCoreEngineeringSteeringSandbox\",\n\"sessionId\": \"testing_12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://gateway-stage.optum.com/api/stage/pdr/ivr-mw-provider-auth/v1/provider-shield/search",
+							"protocol": "https",
+							"host": [
+								"gateway-stage",
+								"optum",
+								"com"
+							],
+							"path": [
+								"api",
+								"stage",
+								"pdr",
+								"ivr-mw-provider-auth",
+								"v1",
+								"provider-shield",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
