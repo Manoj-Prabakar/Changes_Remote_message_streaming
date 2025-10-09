@@ -1,0 +1,24 @@
+"memIdentifier": "992507121",
+ 
+memIdentifier": "17499541900",
+ 
+ 
+Member individual/search 
+   {
+  "consumerApp": "UHC Member",
+  "dob": "19551015",
+  "last4DigitsSSN": null,
+  "memIdentifier": "992507121",
+  "sessionId": "00103217301756518597",
+  "zipCode": ""
+}
+ 
+Member-membership/search
+{
+    "consumerApp": "UHC Member", 
+    "coverageTypePriority": "M,MA,MC,ME,MH,MS,B,RX",
+    "coverageVersion": "2", 
+    "dateOfService": "20250908",
+    "sessionId": "00103217301756518597",
+    "timeLinePriority": "CURRENT, PAST, FUTURE"
+}
